@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [7.4-fpm, 8]
+        php: [7.4-fpm, 8-fpm]
 
     steps:
       - name: Check out the repo
@@ -47,6 +47,13 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Generate current image prefix
+        id: prefix
+        run: |
+          prefix="${matrix.php/-fpm/}"
+          echo $prefix
+          echo "::set-output name=ref::$prefix"
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
@@ -55,7 +62,7 @@ jobs:
             sparanoid/php-fpm
             ghcr.io/sparanoid/php-fpm
           flavor: |
-            prefix=${{ matrix.php }}-
+            prefix=${{ steps.prefix.outputs.ref }}-
           tags: |
             type=schedule
             type=ref,event=branch
