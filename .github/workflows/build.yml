@@ -70,7 +70,7 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
-            type=sha
+            type=sha,prefix=${{ steps.prefix.outputs.ref }}-sha-
 
       - name: Build and push
         uses: docker/build-push-action@v2
