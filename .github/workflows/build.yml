@@ -50,7 +50,7 @@ jobs:
       - name: Generate current image prefix
         id: prefix
         run: |
-          prefix="${matrix.php/-fpm/}"
+          prefix="${${{ matrix.php }}/-fpm/}"
           echo $prefix
           echo "::set-output name=ref::$prefix"
 
