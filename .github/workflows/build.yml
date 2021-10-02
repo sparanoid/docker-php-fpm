@@ -62,7 +62,7 @@ jobs:
             sparanoid/php-fpm
             ghcr.io/sparanoid/php-fpm
           flavor: |
-            prefix=${{ steps.prefix.outputs.ref }}-
+            prefix=${{ steps.prefix.outputs.ref }}-,onlatest=true
           tags: |
             type=schedule
             type=ref,event=branch
