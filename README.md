@@ -2,7 +2,7 @@
 
 Homemade PHP-FPM Docker image with additional extensions compiled.
 
-This image is mainly used for development environments but the default configurations are production-ready to handle small and medium-sized PHP sites.
+This image is mainly used for development environments but the default configurations are production-ready to handle small to medium-sized PHP sites.
 
 ## Built-in Extensions
 
@@ -29,7 +29,7 @@ docker run --rm -it --name tmp-php-fpm sparanoid/php-fpm:latest php -m
 
 ## Key Files and Directories
 
-- `/app` - default PHP working directory (`WORKDIR`)
+- `/app` - Default PHP working directory (`WORKDIR`)
 - `/usr/local/etc/php-fpm.conf` - Global FPM settings
 - `/usr/local/etc/php/conf.d/` - Custom PHP configurations
 - `/usr/local/etc/php-fpm.d/` - PHP-FPM configurations

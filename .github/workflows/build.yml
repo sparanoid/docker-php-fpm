@@ -43,23 +43,21 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker Hub meta
-        id: meta-hub
-        uses: docker/metadata-action@v3
-        with:
-          images: sparanoid/php-fpm
-
-      - name: GitHub Container Registry meta
-        id: meta-ghcr
-        uses: docker/metadata-action@v3
-        with:
-          images: ghcr.io/sparanoid/php-fpm
-
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: sparanoid/php-fpm
+          images: |
+            sparanoid/php-fpm
+            ghcr.io/sparanoid/php-fpm
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
 
       - name: Build and push
         uses: docker/build-push-action@v2
@@ -67,6 +65,5 @@ jobs:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           platforms: linux/amd64,linux/arm64
-          tags: |
-            ${{ steps.meta-hub.outputs.tags }}
-            ${{ steps.meta-ghcr.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
