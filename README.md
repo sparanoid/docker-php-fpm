@@ -1,8 +1,13 @@
 # Docker PHP-FPM
 
-Homemade PHP-FPM Docker image with additional extensions compiled.
+Homemade PHP-FPM Docker image with additional extensions based on [official PHP images](https://hub.docker.com/_/php).
 
 This image is mainly used for development environments but the default configurations are production-ready to handle small to medium-sized PHP sites.
+
+## Features
+
+- Supported architectures: linux/amd64, linux/arm64
+- Supported PHP base images: 8-fpm, 7.4-fpm
 
 ## Built-in Extensions
 
