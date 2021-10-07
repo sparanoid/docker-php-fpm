@@ -6,7 +6,7 @@ This image is mainly used for development environments but the default configura
 
 ## Features
 
-- Supported architectures: linux/amd64, linux/arm64
+- Supported architectures: linux/amd64, linux/arm64, linux/arm/v7
 - Supported PHP base images: 8-fpm, 7.4-fpm
 
 ## Built-in Extensions
