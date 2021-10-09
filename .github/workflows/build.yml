@@ -32,7 +32,7 @@ jobs:
       - name: Cache Docker layers
         uses: actions/cache@v2
         with:
-          path: /tmp/.buildx-cache
+          path: /tmp/.buildx-cache-${{ matrix.php }}
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
@@ -91,7 +91,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             TAG=${{ matrix.php }}
-          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache-${{ matrix.php }}
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
       # Temp fix
@@ -99,5 +99,5 @@ jobs:
       # https://github.com/moby/buildkit/issues/1896
       - name: Move cache
         run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          rm -rf /tmp/.buildx-cache-${{ matrix.php }}
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache-${{ matrix.php }}
