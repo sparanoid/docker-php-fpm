@@ -11,8 +11,8 @@ WORKDIR /app
 # $PHP_INI_DIR default to /usr/local/etc/php/
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 RUN apt-get update \
-    && apt-get install -y libzip-dev libpng-dev libicu-dev libmagickwand-dev \
-    && docker-php-ext-install -j$(nproc) bcmath mysqli exif zip gd intl opcache \
+    && apt-get install -y libpq-dev libzip-dev libpng-dev libicu-dev libmagickwand-dev \
+    && docker-php-ext-install -j$(nproc) bcmath mysqli pdo_mysql pgsql pdo_pgsql exif zip gd intl opcache \
     # PECL extensions should be installed in series to fail properly if something went wrong.
     # Otherwise errors are just skipped by PECL.
     && pecl install apcu \
