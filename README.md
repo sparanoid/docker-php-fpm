@@ -16,7 +16,7 @@ This image is bundled with additional extensions that should work with most mode
 - apcu
 - bcmath
 - exif
-- gd
+- gd (with freetype, jpeg, and webp)
 - igbinary
 - imagick
 - intl
