@@ -8,6 +8,7 @@ This image is mainly used for development environments but the default configura
 
 - Supported architectures: linux/amd64, linux/arm64, linux/arm/v7
 - Supported PHP base images: 8-fpm, 7.4-fpm
+- Bundled ImageMagick binary
 
 ## Built-in Extensions
 
