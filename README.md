@@ -21,8 +21,9 @@ This image is bundled with additional extensions that should work with most mode
 - imagick
 - intl
 - msgpack
-- mysqli
 - opcache
+- pdo_mysql
+- pdo_pgsql
 - redis
 - zip
 
