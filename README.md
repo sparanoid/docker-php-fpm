@@ -64,15 +64,17 @@ services:
     image: nginx:alpine
     restart: always
     ports:
-      - 8080:80
+      - 80:80
+      # Enable 443 on production
+      # - 443:443
     depends_on:
       - php
     volumes:
       - ./data/nginx:/app
-      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - ./config/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
 
   php:
-    image: sparanoid/php-fpm:latest
+    image: sparanoid/php-fpm:8-latest
     restart: always
     depends_on:
       - redis
@@ -97,7 +99,7 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8081:8080
+      - 127.0.0.1:8080:8080
     depends_on:
       - php
 
