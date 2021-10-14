@@ -1,4 +1,4 @@
-ARG TAG=7.4-fpm
+ARG TAG=8-fpm
 
 # FROM php:7.4-fpm-alpine # alpine does not work with pecl extensions for the lack of glibc
 FROM php:${TAG}
@@ -12,7 +12,7 @@ WORKDIR /app
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 RUN apt-get update \
     # Additional imagemagick is used by PHP fallback to extra format (ie. when MediaWiki process SVG)
-    && apt-get install -y imagemagick libpq-dev libzip-dev libpng-dev libicu-dev libmagickwand-dev libwebp-dev \
+    && apt-get install -y libpq-dev libzip-dev libpng-dev libicu-dev libmagickwand-dev libwebp-dev imagemagick zip unzip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) bcmath mysqli pdo_mysql pgsql pdo_pgsql exif zip gd intl opcache \
     # PECL extensions should be installed in series to fail properly if something went wrong.
