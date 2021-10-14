@@ -4,6 +4,9 @@ Homemade PHP-FPM Docker image with additional extensions based on [official PHP 
 
 This image is mainly used for development environments but the default configurations are production-ready to handle small to medium-sized PHP sites.
 
+- [Docker Hub](https://hub.docker.com/r/sparanoid/php-fpm)
+- [ghcr.io](https://github.com/sparanoid/docker-php-fpm/pkgs/container/php-fpm)
+
 ## Features
 
 - Supported architectures: linux/amd64, linux/arm64, linux/arm/v7
