@@ -73,7 +73,7 @@ jobs:
             ${{ env.DOCKERHUB_SLUG }}
             ${{ env.GHCR_SLUG }}
           flavor: |
-            prefix=${{ !startsWith(matrix.php, '8-fpm') && format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
+            prefix=${{ !startsWith(matrix.php, '8-fpm') && '' || format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
           tags: |
             type=edge,prefix=${{ steps.tag.outputs.ref }}
             type=schedule,prefix=${{ steps.tag.outputs.ref }}
