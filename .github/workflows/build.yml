@@ -68,7 +68,7 @@ jobs:
             ${{ env.GHCR_SLUG }}
           # The ' ' is the tricky part to unset prefix parameter
           flavor: |
-            prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
+            prefix=${{ format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
           tags: |
             type=edge,prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
             type=schedule,prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
