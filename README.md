@@ -5,13 +5,12 @@ Homemade PHP-FPM Docker image with additional extensions based on [official PHP 
 This image is mainly used for development environments but the default configurations are production-ready to handle small to medium-sized PHP sites.
 
 - [Docker Hub](https://hub.docker.com/r/sparanoid/php-fpm)
-- [ghcr.io](https://github.com/sparanoid/docker-php-fpm/pkgs/container/php-fpm)
+- [ghcr.io](https://github.com/users/sparanoid/packages/container/package/php-fpm)
 
-## Features
+## Available Tags
 
-- Supported architectures: linux/amd64, linux/arm64, linux/arm/v7
-- Supported PHP base images: 8-fpm, 7.4-fpm
-- Bundled ImageMagick binary
+- 8, 7.4
+- local, dockerhub, \<branch\>, edge, sha-\<hash\>, latest
 
 ## Built-in Extensions
 
@@ -52,6 +51,12 @@ docker run --name tmp-php -d sparanoid/php-fpm:latest
 docker cp tmp-php:/usr/local/etc/ $(pwd)/ejected-php-fpm
 docker rm -f tmp-php
 ```
+
+## Extra Packages
+
+- ImageMagick
+- zip
+- unzip
 
 ## Examples
 
