@@ -61,6 +61,7 @@ jobs:
 
       - name: Generate latest image tag
         id: tag
+        # The ' ' is the tricky part to unset prefix parameter
         run: |
           echo ::set-output name=ref::${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
 
@@ -71,7 +72,6 @@ jobs:
           images: |
             ${{ env.DOCKERHUB_SLUG }}
             ${{ env.GHCR_SLUG }}
-          # The ' ' is the tricky part to unset prefix parameter
           flavor: |
             prefix=${{ format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
           tags: |
@@ -82,7 +82,7 @@ jobs:
             type=semver,pattern={{version}},prefix=${{ steps.tag.outputs.ref }}
             type=semver,pattern={{major}}.{{minor}},prefix=${{ steps.tag.outputs.ref }}
             type=semver,pattern={{major}},prefix=${{ steps.tag.outputs.ref }}
-            type=sha,prefix=${{ steps.prefix.outputs.ref }}-sha-
+            type=sha,prefix=${{ steps.tag.outputs.ref }}sha-
 
       - name: Build and push
         uses: docker/bake-action@v1
