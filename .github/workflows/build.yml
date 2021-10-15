@@ -92,7 +92,7 @@ jobs:
             *.cache-to=type=registry,ref=${{ env.GHCR_SLUG }}:${{ steps.prefix.outputs.ref }}-buildcache,mode=max
 
       - name: Update :latest tag
-        if: matrix.php == 8-fpm && github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/v')
+        if: matrix.php == '8-fpm' && github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/v')
         run: |
           docker tag ${{ env.DOCKERHUB_SLUG }}:${{ steps.meta.outputs.version }} ${{ env.DOCKERHUB_SLUG }}:latest
           docker push ${{ env.DOCKERHUB_SLUG }}:latest
