@@ -59,6 +59,11 @@ jobs:
           echo $prefix
           echo "::set-output name=ref::$prefix"
 
+      - name: Generate latest image tag
+        id: tag
+        run: |
+          echo ::set-output name=ref::${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
@@ -70,13 +75,13 @@ jobs:
           flavor: |
             prefix=${{ format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
           tags: |
-            type=edge,prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
-            type=schedule,prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
-            type=ref,event=branch,prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
-            type=ref,event=pr,prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
-            type=semver,pattern={{version}},prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
-            type=semver,pattern={{major}}.{{minor}},prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
-            type=semver,pattern={{major}},prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
+            type=edge,prefix=${{ steps.tag.outputs.ref }}
+            type=schedule,prefix=${{ steps.tag.outputs.ref }}
+            type=ref,event=branch,prefix=${{ steps.tag.outputs.ref }}
+            type=ref,event=pr,prefix=${{ steps.tag.outputs.ref }}
+            type=semver,pattern={{version}},prefix=${{ steps.tag.outputs.ref }}
+            type=semver,pattern={{major}}.{{minor}},prefix=${{ steps.tag.outputs.ref }}
+            type=semver,pattern={{major}},prefix=${{ steps.tag.outputs.ref }}
             type=sha,prefix=${{ steps.prefix.outputs.ref }}-sha-
 
       - name: Build and push
