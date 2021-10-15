@@ -1,7 +1,7 @@
-ARG TAG=8-fpm
+ARG BASE_TAG=8-fpm
 
 # FROM php:7.4-fpm-alpine # alpine does not work with pecl extensions for the lack of glibc
-FROM php:${TAG}
+FROM php:${BASE_TAG}
 
 LABEL maintainer "Tunghsiao Liu <t@sparanoid.com>"
 
@@ -10,11 +10,44 @@ WORKDIR /app
 # Use the default configuration
 # $PHP_INI_DIR default to /usr/local/etc/php/
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
-RUN apt-get update \
-    # Additional imagemagick is used by PHP fallback to extra format (ie. when MediaWiki process SVG)
-    && apt-get install -y libpq-dev libzip-dev libpng-dev libicu-dev libmagickwand-dev libwebp-dev imagemagick zip unzip \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install -j$(nproc) bcmath mysqli pdo_mysql pgsql pdo_pgsql exif zip gd intl opcache \
+RUN apt-get update && apt-get install -y \
+    #
+    # imagemagick - binary used by PHP fallback to extra format (ie. when MediaWiki process SVG)
+    # php-ext:gd - used by WordPress to process images
+    # php-ext:gmp - used by WordPress plugin Duplicator to backup sites to SFTP
+    # php-ext:icu - used by MediaWiki
+    # zip/unzip - used by WordPress plugin Duplicator to create backups
+    #
+    # Install build dependencies
+    libgmp-dev \
+    libicu-dev \
+    libmagickwand-dev \
+    libpng-dev \
+    libpq-dev \
+    libwebp-dev \
+    libzip-dev \
+    imagemagick \
+    unzip \
+    zip \
+    #
+    # Configure PHP extensions
+    && docker-php-ext-configure \
+    gd --with-freetype --with-jpeg --with-webp \
+    #
+    # Install PHP extensions
+    && docker-php-ext-install -j$(nproc) \
+    bcmath \
+    exif \
+    gd \
+    gmp \
+    intl \
+    mysqli \
+    opcache \
+    pdo_mysql \
+    pdo_pgsql \
+    pgsql \
+    zip \
+    #
     # PECL extensions should be installed in series to fail properly if something went wrong.
     # Otherwise errors are just skipped by PECL.
     && pecl install apcu \
@@ -22,7 +55,14 @@ RUN apt-get update \
     && pecl install imagick \
     && pecl install msgpack \
     && pecl install redis \
-    && docker-php-ext-enable apcu igbinary imagick msgpack redis \
+    #
+    # Enable PECL extensions
+    && docker-php-ext-enable \
+    apcu \
+    igbinary \
+    imagick \
+    msgpack \
+    redis \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup php.ini
