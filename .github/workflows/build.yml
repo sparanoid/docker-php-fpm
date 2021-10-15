@@ -53,6 +53,7 @@ jobs:
 
       - name: Generate current image prefix
         id: prefix
+        # Remove unwanted `-fpm` suffix from base image
         run: |
           prefix=$(echo ${{ matrix.php }} | sed 's/-fpm//g')
           echo $prefix
@@ -75,6 +76,7 @@ jobs:
             type=ref,event=branch,prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
             type=ref,event=pr
             type=semver,pattern={{version}}
+            type=semver,pattern={{version}},prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=sha,prefix=${{ steps.prefix.outputs.ref }}-sha-
