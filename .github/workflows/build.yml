@@ -67,7 +67,7 @@ jobs:
             ${{ env.DOCKERHUB_SLUG }}
             ${{ env.GHCR_SLUG }}
           flavor: |
-            prefix=${{ steps.prefix.outputs.ref }}-,onlatest=true
+            prefix=${{ steps.prefix.outputs.ref }}-
           # The ' ' is the tricky part to unset prefix parameter
           tags: |
             type=edge
