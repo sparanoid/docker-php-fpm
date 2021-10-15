@@ -71,6 +71,7 @@ jobs:
             type=edge
             type=schedule
             type=ref,event=branch
+            type=ref,event=branch,prefix=${{ startsWith(matrix.php, '8-fpm') && '' || steps.prefix.outputs.ref }}
             type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
@@ -90,17 +91,6 @@ jobs:
           set: |
             *.cache-from=type=registry,ref=${{ env.GHCR_SLUG }}:${{ steps.prefix.outputs.ref }}-buildcache
             *.cache-to=type=registry,ref=${{ env.GHCR_SLUG }}:${{ steps.prefix.outputs.ref }}-buildcache,mode=max
-
-      - name: Update :latest tag
-        # if: matrix.php == '8-fpm' && github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/v')
-        if: matrix.php == '8-fpm'
-        run: |
-          docker image ls
-          docker tag ${{ env.DOCKERHUB_SLUG }}:${{ steps.meta.outputs.version }} ${{ env.DOCKERHUB_SLUG }}:latest
-          docker push ${{ env.DOCKERHUB_SLUG }}:latest
-
-          docker tag ${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }} ${{ env.GHCR_SLUG }}:latest
-          docker push ${{ env.GHCR_SLUG }}:latest
 
       - name: Check manifest
         if: github.event_name != 'pull_request'
