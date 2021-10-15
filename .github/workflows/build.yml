@@ -71,7 +71,6 @@ jobs:
             type=edge
             type=schedule
             type=ref,event=branch
-            type=ref,event=branch,prefix=${{ startsWith(matrix.php, '8') && '' || {steps.prefix.outputs.ref}- }}
             type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
