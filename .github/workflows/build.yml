@@ -66,11 +66,12 @@ jobs:
           images: |
             ${{ env.DOCKERHUB_SLUG }}
             ${{ env.GHCR_SLUG }}
-          flavor: |
-            prefix=${{ steps.prefix.outputs.ref }}-
+          # flavor: |
+          #   prefix=${{ steps.prefix.outputs.ref }}-
           # The ' ' is the tricky part to unset prefix parameter
           tags: |
             type=edge
+            type=edge,prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
             type=schedule
             type=ref,event=branch
             type=ref,event=branch,prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
