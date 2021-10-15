@@ -78,7 +78,9 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{version}},prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
             type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}.{{minor}},prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
             type=semver,pattern={{major}}
+            type=semver,pattern={{major}},prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
             type=sha,prefix=${{ steps.prefix.outputs.ref }}-sha-
 
       - name: Build and push
