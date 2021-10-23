@@ -67,13 +67,13 @@ jobs:
 
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@548e2346a9987b56d8a4104fe776321ff8e23440
         with:
           images: |
             ${{ env.DOCKERHUB_SLUG }}
             ${{ env.GHCR_SLUG }}
           flavor: |
-            prefix=${{ !startsWith(matrix.php, '8-fpm') && '' || format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
+            prefix=${{ !startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
           tags: |
             type=edge,prefix=${{ steps.tag.outputs.ref }}
             type=schedule,prefix=${{ steps.tag.outputs.ref }}
