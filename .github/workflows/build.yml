@@ -63,7 +63,7 @@ jobs:
         id: tag
         # The ' ' is the tricky part to unset prefix parameter
         run: |
-          echo ::set-output name=ref::${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
+          echo ::set-output name=ref::${{ matrix.php == '8-fpm' && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
 
       - name: Docker meta
         id: meta
@@ -73,7 +73,7 @@ jobs:
             ${{ env.DOCKERHUB_SLUG }}
             ${{ env.GHCR_SLUG }}
           flavor: |
-            prefix=${{ startsWith(matrix.php, '8-fpm') && ' ' || format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
+            prefix=${{ matrix.php == '8-fpm' && ' ' || format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
           tags: |
             type=edge,prefix=${{ steps.tag.outputs.ref }}
             type=schedule,prefix=${{ steps.tag.outputs.ref }}
