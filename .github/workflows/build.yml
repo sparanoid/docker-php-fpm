@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [8-fpm, 7.4-fpm]
+        php: [8-fpm, 8-fpm-buster, 8-fpm-bullseye, 7.4-fpm, 7.4-fpm-buster, 7.4-fpm-bullseye]
 
     steps:
       - name: Check out the repo
