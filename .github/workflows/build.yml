@@ -24,8 +24,9 @@ jobs:
     strategy:
       matrix:
         php: [
-          8.1-fpm, 8.1-fpm-buster, 8.1-fpm-bullseye,
           8-fpm, 8-fpm-buster, 8-fpm-bullseye,
+          8.1-fpm, 8.1-fpm-buster, 8.1-fpm-bullseye,
+          8.0-fpm, 8.0-fpm-buster, 8.0-fpm-bullseye,
           7.4-fpm, 7.4-fpm-buster, 7.4-fpm-bullseye,
         ]
 
@@ -70,7 +71,7 @@ jobs:
         id: tag
         # The ' ' is the tricky part to unset prefix parameter
         run: |
-          echo ::set-output name=ref::${{ matrix.php == '8.1-fpm' && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
+          echo ::set-output name=ref::${{ matrix.php == '8-fpm' && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
 
       - name: Docker meta
         id: meta
@@ -80,7 +81,7 @@ jobs:
             ${{ env.DOCKERHUB_SLUG }}
             ${{ env.GHCR_SLUG }}
           flavor: |
-            prefix=${{ matrix.php == '8.1-fpm' && ' ' || format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
+            prefix=${{ matrix.php == '8-fpm' && ' ' || format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
           tags: |
             type=edge,prefix=${{ steps.tag.outputs.ref }}
             type=schedule,prefix=${{ steps.tag.outputs.ref }}
