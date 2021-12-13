@@ -9,8 +9,8 @@ This image is mainly used for development environments but the default configura
 
 ## Available Tags
 
-- 8 (default), 7.4
-- local, dockerhub, \<branch\>, edge, sha-\<hash\>, latest (default to `8`)
+- 8.1 (default), 8, 7.4
+- local, dockerhub, \<branch\>, edge, sha-\<hash\>, latest (default to `8.1`)
 
 ## Built-in Extensions
 
