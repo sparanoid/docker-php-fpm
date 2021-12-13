@@ -10,7 +10,7 @@ variable "BASE_SLUG" {
 }
 
 variable "BASE_TAG" {
-  default = "8-fpm"
+  default = "8.1-fpm"
 }
 
 variable "BUILD_TAG" {
@@ -19,8 +19,8 @@ variable "BUILD_TAG" {
 
 variable "DEFAULT_TAG" {
   default = [
-    # Only build :local for 8-fpm
-    equal("8-fpm", BASE_TAG) ? "${BASE_SLUG}:local" : "",
+    # Only build :local for 8.1-fpm
+    equal("8.1-fpm", BASE_TAG) ? "${BASE_SLUG}:local" : "",
     "${BASE_SLUG}:${BUILD_TAG}-local"
   ]
 }
