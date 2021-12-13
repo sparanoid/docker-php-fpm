@@ -1,4 +1,4 @@
-ARG BASE_TAG=8-fpm
+ARG BASE_TAG=8.1-fpm
 
 # FROM php:7.4-fpm-alpine # alpine does not work with pecl extensions for the lack of glibc
 FROM php:${BASE_TAG}
