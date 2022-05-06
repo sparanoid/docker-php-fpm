@@ -93,7 +93,7 @@ jobs:
             type=sha,prefix=${{ steps.tag.outputs.ref }}sha-
 
       - name: Build and push
-        uses: docker/bake-action@v1
+        uses: docker/bake-action@v2
         env:
           BASE_TAG: ${{ matrix.php }}
         with:
