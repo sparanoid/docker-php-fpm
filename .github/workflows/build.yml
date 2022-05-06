@@ -103,8 +103,8 @@ jobs:
           targets: build-all
           push: ${{ github.event_name != 'pull_request' }}
           set: |
-            *.cache-from=type=registry,ref=${{ env.GHCR_SLUG }}:${{ steps.prefix.outputs.ref }}-buildcache
-            *.cache-to=type=registry,ref=${{ env.GHCR_SLUG }}:${{ steps.prefix.outputs.ref }}-buildcache,mode=max
+            *.cache-from=type=gha
+            *.cache-to=type=gha,mode=max
 
       - name: Check manifest
         if: github.event_name != 'pull_request'
