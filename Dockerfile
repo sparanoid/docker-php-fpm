@@ -99,6 +99,7 @@ RUN sed -i -r "s/pm.max_children = 5/pm.max_children = 640/g" "/usr/local/etc/ph
     && sed -i -r "s/pm.max_spare_servers = 3/pm.max_spare_servers = 24/g" "/usr/local/etc/php-fpm.d/www.conf" \
     && sed -i -r "s/;pm.process_idle_timeout = 10s/pm.process_idle_timeout = 10s/g" "/usr/local/etc/php-fpm.d/www.conf" \
     && sed -i -r "s/;pm.max_requests = 500/pm.max_requests = 500/g" "/usr/local/etc/php-fpm.d/www.conf" \
+    && sed -i -r "s/;pm.status_path/pm.status_path/g" "/usr/local/etc/php-fpm.d/www.conf" \
     && sed -i -r "s/max_execution_time = 30/max_execution_time = 180/g" "/usr/local/etc/php-fpm.d/www.conf"
 
 # Setup Redis
