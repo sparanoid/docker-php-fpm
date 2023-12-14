@@ -3,7 +3,7 @@ ARG BASE_TAG=8-fpm
 # FROM php:7.4-fpm-alpine # alpine does not work with pecl extensions for the lack of glibc
 FROM php:${BASE_TAG}
 
-LABEL maintainer "Tunghsiao Liu <t@sparanoid.com>"
+LABEL maintainer "Sparanoid <t@sparanoid.com>"
 
 WORKDIR /app
 
