@@ -67,13 +67,13 @@ jobs:
         run: |
           prefix=$(echo ${{ matrix.php }} | sed 's/-fpm//g')
           echo $prefix
-          echo "::set-output name=ref::$prefix"
+          echo "ref=$prefix" >> $GITHUB_OUTPUT
 
       - name: Generate latest image tag
         id: tag
         # The ' ' is the tricky part to unset prefix parameter
         run: |
-          echo ::set-output name=ref::${{ matrix.php == '8-fpm' && ' ' || format('{0}-', steps.prefix.outputs.ref) }}
+          echo "ref=${{ matrix.php == '8-fpm' && ' ' || format('{0}-', steps.prefix.outputs.ref) }}" >> $GITHUB_OUTPUT
 
       - name: Docker meta
         id: meta
