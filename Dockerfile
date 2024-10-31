@@ -1,11 +1,17 @@
 ARG BASE_TAG=8-fpm
 
+# Based on official image:
+# https://hub.docker.com/_/php
 # FROM php:7.4-fpm-alpine # alpine does not work with pecl extensions for the lack of glibc
 FROM php:${BASE_TAG}
 
-LABEL maintainer "Sparanoid <t@sparanoid.com>"
+LABEL maintainer="Sparanoid <t@sparanoid.com>"
 
 WORKDIR /app
+
+# Install docker-php-extension-installer
+# https://github.com/mlocati/docker-php-extension-installer
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 # Use the default configuration
 # $PHP_INI_DIR default to /usr/local/etc/php/
@@ -52,7 +58,11 @@ RUN apt-get update && apt-get install -y \
     # Otherwise errors are just skipped by PECL.
     && pecl install apcu \
     && pecl install igbinary \
-    && pecl install imagick \
+
+    # TODO: broken on PHP 8.3
+    # https://github.com/Imagick/imagick/issues/643
+    # && pecl install imagick \
+    && install-php-extensions Imagick/imagick@28f27044e435a2b203e32675e942eb8de620ee58 \
     && pecl install msgpack \
     && pecl install redis \
     #
