@@ -11,7 +11,7 @@ This image is mainly used for development environments but the default configura
 
 - 8 (default)
   - 8.3, 8.2, 8.1, 8.0 (deprecated)
--  7.4 (deprecated)
+- 7.4 (deprecated)
 - local, dockerhub, \<branch\>, edge, sha-\<hash\>, latest (default to `8`)
 
 ## Built-in Extensions
@@ -35,7 +35,7 @@ This image is bundled with additional extensions that should work with most mode
 You can view full built-in extensions:
 
 ```bash
-docker run --rm -it --name tmp-php-fpm sparanoid/php-fpm:latest php -m
+docker run --rm -it --name tmp-php-fpm sparanoid/php-fpm:edge php -m
 ```
 
 ## Key Files and Directories
@@ -49,7 +49,7 @@ docker run --rm -it --name tmp-php-fpm sparanoid/php-fpm:latest php -m
 You can eject and inspect these configs by using the following commands:
 
 ```bash
-docker run --name tmp-php -d sparanoid/php-fpm:latest
+docker run --name tmp-php -d sparanoid/php-fpm:edge
 docker cp tmp-php:/usr/local/etc/ $(pwd)/ejected-php-fpm
 docker rm -f tmp-php
 ```
@@ -67,16 +67,13 @@ Using this image with ejected WordPress, Nginx, MariaDB, Redis and Adminer.
 Edit `docker-compose.yml`:
 
 ```yaml
-version: '3'
-
 services:
   nginx:
     image: nginx:alpine
     restart: always
     ports:
       - 80:80
-      # Enable 443 on production
-      # - 443:443
+      - 443:443
     depends_on:
       - php
     volumes:
@@ -84,7 +81,7 @@ services:
       - ./config/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
 
   php:
-    image: sparanoid/php-fpm:8-latest
+    image: sparanoid/php-fpm:8-edge
     restart: always
     depends_on:
       - redis
