@@ -3,14 +3,14 @@ name: Build
 on:
   push:
     branches:
-      - 'master'
+      - "master"
     tags:
-      - 'v*'
+      - "v*"
   pull_request:
     branches:
-      - 'master'
+      - "master"
   schedule:
-    - cron: '21 12 * * *'
+    - cron: "21 12 * * *"
   workflow_dispatch:
 
 env:
@@ -23,14 +23,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [
-          8-fpm,
-          8.3-fpm,
-          8.2-fpm,
-          8.1-fpm,
-          8.0-fpm,
-          7.4-fpm,
-        ]
+        php: [8-fpm, 8.3-fpm, 8.2-fpm, 8.1-fpm, 8.0-fpm, 7.4-fpm]
 
     steps:
       - name: Check out the repo
