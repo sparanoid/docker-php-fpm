@@ -61,8 +61,10 @@ RUN apt-get update && apt-get install -y \
 
     # TODO: broken on PHP 8.3
     # https://github.com/Imagick/imagick/issues/643
+    # https://github.com/Imagick/imagick/issues/698#issuecomment-2758970708
     # && pecl install imagick \
-    && install-php-extensions Imagick/imagick@28f27044e435a2b203e32675e942eb8de620ee58 \
+    # && install-php-extensions Imagick/imagick@28f27044e435a2b203e32675e942eb8de620ee58 \
+    && CPPFLAGS='-Dphp_strtolower=zend_str_tolower' pecl install imagick \
     && pecl install msgpack \
     && pecl install redis \
     #
