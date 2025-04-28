@@ -23,7 +23,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [8-fpm, 8.4-fpm, 8.3-fpm, 8.2-fpm]
+        php: [8-fpm, 8.4-fpm, 8.3-fpm]
 
     steps:
       - name: Check out the repo

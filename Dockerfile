@@ -64,7 +64,15 @@ RUN apt-get update && apt-get install -y \
     # https://github.com/Imagick/imagick/issues/698#issuecomment-2758970708
     # && pecl install imagick \
     # && install-php-extensions Imagick/imagick@28f27044e435a2b203e32675e942eb8de620ee58 \
-    && CPPFLAGS='-Dphp_strtolower=zend_str_tolower' pecl install imagick \
+    && pecl download imagick \
+    && tar -xzf imagick-*.tgz \
+    && cd imagick-* \
+    && phpize \
+    && ./configure CPPFLAGS='-Dphp_strtolower=zend_str_tolower' \
+    && make -j$(nproc) \
+    && make install \
+    && cd .. \
+    && rm -rf imagick-* \
     && pecl install msgpack \
     && pecl install redis \
     #
