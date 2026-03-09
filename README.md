@@ -10,7 +10,8 @@ This image is mainly used for development environments but the default configura
 ## Available Tags
 
 - 8 (default)
-  - 8.3, 8.2, 8.1, 8.0 (deprecated)
+  - 8.5, 8.4, 8.3
+  - 8.2, 8.1, 8.0 (deprecated)
 - 7.4 (deprecated)
 - local, dockerhub, \<branch\>, edge, sha-\<hash\>, latest (default to `8`)
 
