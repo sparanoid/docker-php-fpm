@@ -58,7 +58,6 @@ RUN apt-get update && apt-get install -y \
     # Otherwise errors are just skipped by PECL.
     && pecl install apcu \
     && pecl install igbinary \
-
     # TODO: broken on PHP 8.3
     # https://github.com/Imagick/imagick/issues/643
     # https://github.com/Imagick/imagick/issues/698#issuecomment-2758970708
