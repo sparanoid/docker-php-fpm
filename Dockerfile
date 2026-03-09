@@ -16,32 +16,21 @@ ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/relea
 # Use the default configuration
 # $PHP_INI_DIR default to /usr/local/etc/php/
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+# imagemagick - binary used by PHP fallback to extra format (ie. when MediaWiki process SVG)
+# zip/unzip - used by WordPress plugin Duplicator to create backups
 RUN apt-get update && apt-get install -y \
-    #
-    # imagemagick - binary used by PHP fallback to extra format (ie. when MediaWiki process SVG)
-    # php-ext:gd - used by WordPress to process images
-    # php-ext:gmp - used by WordPress plugin Duplicator to backup sites to SFTP
-    # php-ext:icu - used by MediaWiki
-    # zip/unzip - used by WordPress plugin Duplicator to create backups
-    #
-    # Install build dependencies
-    libgmp-dev \
-    libicu-dev \
-    libmagickwand-dev \
-    libpng-dev \
-    libpq-dev \
-    libwebp-dev \
-    libzip-dev \
     imagemagick \
     unzip \
     zip \
-    #
-    # Configure PHP extensions
-    && docker-php-ext-configure \
-    gd --with-freetype --with-jpeg --with-webp \
-    #
-    # Install PHP extensions
-    && docker-php-ext-install -j$(nproc) \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions via install-php-extensions
+# https://github.com/mlocati/docker-php-extension-installer
+#
+# php-ext:gd - used by WordPress to process images
+# php-ext:gmp - used by WordPress plugin Duplicator to backup sites to SFTP
+# php-ext:icu - used by MediaWiki
+RUN install-php-extensions \
     bcmath \
     exif \
     gd \
@@ -53,37 +42,12 @@ RUN apt-get update && apt-get install -y \
     pdo_pgsql \
     pgsql \
     zip \
-    #
-    # PECL extensions should be installed in series to fail properly if something went wrong.
-    # Otherwise errors are just skipped by PECL.
-    && pecl install apcu \
-    && pecl install igbinary \
-
-    # TODO: broken on PHP 8.3
-    # https://github.com/Imagick/imagick/issues/643
-    # https://github.com/Imagick/imagick/issues/698#issuecomment-2758970708
-    # && pecl install imagick \
-    # && install-php-extensions Imagick/imagick@28f27044e435a2b203e32675e942eb8de620ee58 \
-    && pecl download imagick \
-    && tar -xzf imagick-*.tgz \
-    && cd imagick-* \
-    && phpize \
-    && ./configure CPPFLAGS='-Dphp_strtolower=zend_str_tolower' \
-    && make -j$(nproc) \
-    && make install \
-    && cd .. \
-    && rm -rf imagick-* \
-    && pecl install msgpack \
-    && pecl install redis \
-    #
-    # Enable PECL extensions
-    && docker-php-ext-enable \
+    zstd \
     apcu \
     igbinary \
     imagick \
     msgpack \
-    redis \
-    && rm -rf /var/lib/apt/lists/*
+    redis
 
 # Setup php.ini
 RUN sed -i -r "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" "$PHP_INI_DIR/php.ini" \

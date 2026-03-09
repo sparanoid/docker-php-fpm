@@ -23,7 +23,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [8-fpm, 8.4-fpm, 8.3-fpm]
+        php: [8-fpm, 8.5-fpm, 8.4-fpm, 8.3-fpm]
 
     steps:
       - name: Check out the repo
@@ -70,7 +70,7 @@ jobs:
 
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: |
             ${{ env.DOCKERHUB_SLUG }}
