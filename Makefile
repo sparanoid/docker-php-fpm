@@ -2,7 +2,9 @@ all: build
 
 build:
 	docker build --build-arg BASE_TAG=8-fpm -t sparanoid/php-fpm:8-latest .
-	docker build --build-arg BASE_TAG=7.4-fpm -t sparanoid/php-fpm:7.4-latest .
+	docker build --build-arg BASE_TAG=8.5-fpm -t sparanoid/php-fpm:8.5-latest .
+	docker build --build-arg BASE_TAG=8.4-fpm -t sparanoid/php-fpm:8.4-latest .
+	docker build --build-arg BASE_TAG=8.3-fpm -t sparanoid/php-fpm:8.3-latest .
 
 # Usage: make build tag=8
 buildx:
@@ -20,7 +22,9 @@ up:
 
 push:
 	docker push sparanoid/php-fpm:8-latest
-	docker push sparanoid/php-fpm:7.4-latest
+	docker push sparanoid/php-fpm:8.5-latest
+	docker push sparanoid/php-fpm:8.4-latest
+	docker push sparanoid/php-fpm:8.3-latest
 
 stop:
 	docker rm -f php-fpm
