@@ -54,19 +54,9 @@ RUN apt-get update && apt-get install -y \
     pgsql \
     zip \
     #
-    # PECL extensions should be installed in series to fail properly if something went wrong.
-    # Otherwise errors are just skipped by PECL.
-    && pecl install apcu \
-    && pecl install igbinary \
-    # TODO: broken on PHP 8.3
-    # https://github.com/Imagick/imagick/issues/643
-    # https://github.com/Imagick/imagick/issues/698#issuecomment-2758970708
-    && CPPFLAGS='-Dphp_strtolower=zend_str_tolower' pecl install imagick \
-    && pecl install msgpack \
-    && pecl install redis \
-    #
-    # Enable PECL extensions
-    && docker-php-ext-enable \
+    # PECL extensions via install-php-extensions for better PHP version compatibility.
+    # install-php-extensions handles building, installing, and enabling in one step.
+    && install-php-extensions \
     apcu \
     igbinary \
     imagick \
