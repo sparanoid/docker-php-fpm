@@ -35,7 +35,7 @@ This image is bundled with additional extensions that should work with most mode
 You can view full built-in extensions:
 
 ```bash
-docker run --rm -it --name tmp-php-fpm sparanoid/php-fpm:edge php -m
+docker run --rm -it --name tmp-php-fpm ghcr.io/sparanoid/php-fpm:edge php -m
 ```
 
 ## Key Files and Directories
@@ -49,7 +49,7 @@ docker run --rm -it --name tmp-php-fpm sparanoid/php-fpm:edge php -m
 You can eject and inspect these configs by using the following commands:
 
 ```bash
-docker run --name tmp-php -d sparanoid/php-fpm:edge
+docker run --name tmp-php -d ghcr.io/sparanoid/php-fpm:edge
 docker cp tmp-php:/usr/local/etc/ $(pwd)/ejected-php-fpm
 docker rm -f tmp-php
 ```
@@ -81,7 +81,7 @@ services:
       - ./config/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
 
   php:
-    image: sparanoid/php-fpm:8-edge
+    image: ghcr.io/sparanoid/php-fpm:8-edge
     restart: always
     depends_on:
       - redis
