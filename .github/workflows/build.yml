@@ -14,7 +14,6 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKERHUB_SLUG: sparanoid/php-fpm
   GHCR_SLUG: ghcr.io/sparanoid/php-fpm
 
 jobs:
@@ -73,7 +72,6 @@ jobs:
         uses: docker/metadata-action@v6
         with:
           images: |
-            ${{ env.DOCKERHUB_SLUG }}
             ${{ env.GHCR_SLUG }}
           flavor: |
             prefix=${{ matrix.php == '8-fpm' && ' ' || format('{0}-', steps.prefix.outputs.ref) }},onlatest=true
@@ -105,13 +103,10 @@ jobs:
       - name: Check manifest
         if: github.event_name != 'pull_request'
         run: |
-          docker buildx imagetools inspect ${{ env.DOCKERHUB_SLUG }}:${{ steps.meta.outputs.version }}
           docker buildx imagetools inspect ${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }}
 
       - name: Inspect image
         if: github.event_name != 'pull_request'
         run: |
-          docker pull ${{ env.DOCKERHUB_SLUG }}:${{ steps.meta.outputs.version }}
-          docker image inspect ${{ env.DOCKERHUB_SLUG }}:${{ steps.meta.outputs.version }}
           docker pull ${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }}
           docker image inspect ${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }}
