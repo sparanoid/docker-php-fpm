@@ -4,7 +4,6 @@ Homemade PHP-FPM Docker image with additional extensions based on [official PHP 
 
 This image is mainly used for development environments but the default configurations are production-ready to handle small to medium-sized PHP sites.
 
-- [Docker Hub](https://hub.docker.com/r/sparanoid/php-fpm)
 - [ghcr.io](https://github.com/users/sparanoid/packages/container/package/php-fpm)
 
 ## Available Tags
